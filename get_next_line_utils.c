@@ -6,7 +6,20 @@
 /*   By: rmorais <rmorais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 23:31:34 by rmorais           #+#    #+#             */
-/*   Updated: 2022/11/19 21:59:13 by rmorais          ###   ########.fr       */
+/*   Updated: 2022/11/19 23:38:11 by rmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "get_next_line.h"
+
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0' && str[i] != '\n')
+	{
+		i++;
+	}
+	return (i);
+}
