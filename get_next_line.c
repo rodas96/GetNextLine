@@ -6,7 +6,7 @@
 /*   By: rmorais <rmorais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 23:31:31 by rmorais           #+#    #+#             */
-/*   Updated: 2022/11/21 21:03:25 by rmorais          ###   ########.fr       */
+/*   Updated: 2022/11/23 18:47:20 by rmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,20 @@
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
-	char	*line;
-	
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0))
+	static char	buffer[FOPEN_MAX][BUFFER_SIZE + 1];
+	char		*line;
+
+	if (fd < 0 || FOPEN_MAX < fd)
 		return (NULL);
-	while (buffer || read(fd, buffer, BUFFER_SIZE) > 0)
+	line = NULL;
+	while (buffer[fd][0] || read(fd, buffer[fd], BUFFER_SIZE) > 0)
 	{
-		line = ft_strjoin(line, buffer);
-		if (ft_strlen(buffer) == 0)
+		line = ft_strjoin(line, buffer[fd]);
+		if (ft_strlen(buffer[fd]) == 0)
 			return (line);
-		if (read(fd, buffer, 0) < 0)
+		if (ft_strclean(buffer[fd]) == 1)
+			break ;
+		if (read(fd, buffer[fd], 0) < 0)
 		{
 			free (line);
 			return (NULL);
