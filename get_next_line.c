@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmorais <rmorais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/18 23:31:31 by rmorais           #+#    #+#             */
-/*   Updated: 2022/11/29 14:41:49 by rmorais          ###   ########.fr       */
+/*   Created: 2022/12/22 13:56:42 by rmorais           #+#    #+#             */
+/*   Updated: 2022/12/27 16:59:10 by rmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,39 @@
 
 char	*get_next_line(int fd)
 {
-	static char	buffer[FOPEN_MAX][BUFFER_SIZE + 1];
+	static char	buffer[BUFFER_SIZE + 1];
 	char		*line;
 
-	if (fd < 0 || FOPEN_MAX < fd)
-		return (NULL);
 	line = NULL;
-	while (buffer[fd][0] || read(fd, buffer[fd], BUFFER_SIZE) > 0)
+	if (fd < 0 || BUFFER_SIZE < 1)
+		return (NULL);
+	while (buffer[0] != '\0' || read(fd, buffer, BUFFER_SIZE) > 0)
 	{
-		line = ft_strjoin(line, buffer[fd]);
-		if (ft_strlen(buffer[fd]) == 0)
-			return (line);
-		if (ft_strclean(buffer[fd]) == 1)
+		line = ft_strjoin(line, buffer);
+		if (ft_bufferclean(buffer) == true)
 			break ;
-		if (read(fd, buffer[fd], 0) < 0)
+		if (read(fd, buffer, 0) < 0)
 		{
-			free (line);
+			free(line);
 			return (NULL);
 		}
 	}
 	return (line);
 }
+
+
+/* int main()
+{
+	int	fd;
+	char	*line;
+
+	fd = open("text.txt", O_RDONLY);
+	line = get_next_line(fd);
+	while (line)
+	{
+		printf("%s", line);
+		free (line);
+		line = get_next_line(fd);
+	}
+	close (fd);
+} */

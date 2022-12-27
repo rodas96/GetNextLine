@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmorais <rmorais@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/18 23:31:29 by rmorais           #+#    #+#             */
-/*   Updated: 2022/11/29 15:27:49 by rmorais          ###   ########.fr       */
+/*   Created: 2022/12/22 13:56:39 by rmorais           #+#    #+#             */
+/*   Updated: 2022/12/22 20:12:55 by rmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,17 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 2
 # endif
 
-# include <stdlib.h>
 # include <unistd.h>
+# include <stdlib.h>
+# include <stdbool.h>
 # include <stdio.h>
 
-char	*get_next_line(int fd);
 size_t	ft_strlen(const char *str);
 char	*ft_strjoin(char *s1, char *s2);
-int		ft_strclean(char *str);
+int		ft_bufferclean(char *str);
+char	*get_next_line(int fd);
 
 #endif
